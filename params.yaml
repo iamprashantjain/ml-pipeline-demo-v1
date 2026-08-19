@@ -1,0 +1,27 @@
+data_ingestion:
+  source_url: "https://raw.githubusercontent.com/campusx-official/jupyter-masterclass/main/tweet_emotions.csv"
+  test_size: 0.2
+  random_state: 42
+  data_path: "artifacts/data"
+
+text_vectorization:
+  max_features: 100
+  input_train: artifacts/data/processed/train_processed.csv
+  input_test: artifacts/data/processed/test_processed.csv
+  output_path: artifacts/data/vectorized
+
+model_trainer:
+  model_params:
+    C: 0.01
+    max_iter: 100
+    penalty: "l2"
+    solver: "liblinear"
+  input_train: artifacts/data/vectorized/train_vectorized.csv
+  output_model_path: artifacts/model/logistic_regression_model.pkl
+
+model_evaluation:
+  model_path: "artifacts/model/logistic_regression_model.pkl"
+  input_test: "artifacts/data/vectorized/test_vectorized.csv"
+  metrics_path: "reports/metrics.yaml"
+  predictions_path: "reports/predictions.csv"
+  experiment_info_path: "reports/experiment_info.json"
