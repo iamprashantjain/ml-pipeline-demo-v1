@@ -6,7 +6,6 @@ import yaml
 from sklearn.feature_extraction.text import CountVectorizer
 from mylogging import logging
 from myexception import customexception
-import pickle
 
 def load_params(params_path: str):
     try:
