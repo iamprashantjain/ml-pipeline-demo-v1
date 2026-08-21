@@ -49,3 +49,10 @@ stages:
     outs:
       - reports/metrics.yaml
       - reports/experiment_info.json
+
+
+  model_registry:
+    cmd: python src/6_register_model.py
+    deps:
+      - reports/experiment_info.json
+      - src/6_register_model.py
