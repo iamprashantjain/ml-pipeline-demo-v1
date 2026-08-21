@@ -5,7 +5,7 @@ data_ingestion:
   data_path: "artifacts/data"
 
 text_vectorization:
-  max_features: 25
+  max_features: 50
   input_train: artifacts/data/processed/train_processed.csv
   input_test: artifacts/data/processed/test_processed.csv
   output_path: artifacts/data/vectorized

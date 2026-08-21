@@ -5,7 +5,7 @@ stages:
     deps:
     - path: params.yaml
       hash: md5
-      md5: 6a5a473010a3f7be05a36ec1618d72f4
+      md5: 44377d003df80632e1f7bb635d87e00c
       size: 932
     - path: src/1_data_ingestion.py
       hash: md5
@@ -33,8 +33,8 @@ stages:
       size: 580357
     - path: src/2_data_preprocessing.py
       hash: md5
-      md5: 4bff6a234ca3e4af15032c0beee15920
-      size: 3101
+      md5: ddf2c4068dd5b4d48b385a372ebc0312
+      size: 3103
     outs:
     - path: artifacts/data/processed/test_processed.csv
       hash: md5
@@ -70,11 +70,11 @@ stages:
     deps:
     - path: artifacts/data/vectorized/train_vectorized.csv
       hash: md5
-      md5: 7eecbfdf7d39343b5ecdf9caef1eaf33
-      size: 367049
+      md5: 80f57e1235aba2f18a9348ce5f1cf7d3
+      size: 713326
     - path: params.yaml
       hash: md5
-      md5: 6a5a473010a3f7be05a36ec1618d72f4
+      md5: 44377d003df80632e1f7bb635d87e00c
       size: 932
     - path: src/4_model_trainer.py
       hash: md5
@@ -83,22 +83,22 @@ stages:
     outs:
     - path: artifacts/model/logistic_regression_model.pkl
       hash: md5
-      md5: 6d47fdab6727a93f799bec4b03a70fb3
-      size: 1083
+      md5: 2372acf18700384c1da6df8cef11c0b1
+      size: 1275
   model_evaluation:
     cmd: python src/5_model_evaluation.py
     deps:
     - path: artifacts/data/vectorized/test_vectorized.csv
       hash: md5
-      md5: b4167407f18f2be52276ded4169fe804
-      size: 157858
+      md5: 65b97588bcadb85b6301d5fb4622419c
+      size: 306785
     - path: artifacts/model/logistic_regression_model.pkl
       hash: md5
-      md5: 6d47fdab6727a93f799bec4b03a70fb3
-      size: 1083
+      md5: 2372acf18700384c1da6df8cef11c0b1
+      size: 1275
     - path: params.yaml
       hash: md5
-      md5: 6a5a473010a3f7be05a36ec1618d72f4
+      md5: 44377d003df80632e1f7bb635d87e00c
       size: 932
     - path: src/5_model_evaluation.py
       hash: md5
@@ -107,12 +107,12 @@ stages:
     outs:
     - path: reports/experiment_info.json
       hash: md5
-      md5: 6e77b2a7df696ae5251b1ef9c17fc10a
+      md5: 46794887298d30547af21f7b982e7928
       size: 192
     - path: reports/metrics.yaml
       hash: md5
-      md5: 5c457d2f0e152da4fb0fc6952b75ca4b
-      size: 314
+      md5: dae5aa5a5013a3c150e795227dbebc3f
+      size: 315
   text_vectorization:
     cmd: python src/3_feature_engineering.py
     deps:
@@ -126,7 +126,7 @@ stages:
       size: 390982
     - path: params.yaml
       hash: md5
-      md5: 6a5a473010a3f7be05a36ec1618d72f4
+      md5: 44377d003df80632e1f7bb635d87e00c
       size: 932
     - path: src/3_feature_engineering.py
       hash: md5
@@ -135,13 +135,13 @@ stages:
     outs:
     - path: artifacts/data/vectorized/test_vectorized.csv
       hash: md5
-      md5: b4167407f18f2be52276ded4169fe804
-      size: 157858
+      md5: 65b97588bcadb85b6301d5fb4622419c
+      size: 306785
     - path: artifacts/data/vectorized/train_vectorized.csv
       hash: md5
-      md5: 7eecbfdf7d39343b5ecdf9caef1eaf33
-      size: 367049
+      md5: 80f57e1235aba2f18a9348ce5f1cf7d3
+      size: 713326
     - path: artifacts/data/vectorized/vectorizer.pkl
       hash: md5
-      md5: ddb0d494702e30af0b02ab7550eeed7e
-      size: 1189
+      md5: dd7ae6db9f47a8a2596d5a8cf27c4b3a
+      size: 1841
