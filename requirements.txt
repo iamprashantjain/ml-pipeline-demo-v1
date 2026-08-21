@@ -6,3 +6,6 @@ pyyaml
 joblib
 dvc[s3]
 awscli
+mlflow
+dagshub
+xgboost

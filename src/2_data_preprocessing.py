@@ -10,6 +10,7 @@ from nltk.stem import WordNetLemmatizer
 from mylogging import logging
 from myexception import customexception
 
+
 nltk.download('stopwords')
 nltk.download('wordnet')
 
