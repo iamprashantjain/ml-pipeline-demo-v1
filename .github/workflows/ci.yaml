@@ -4,7 +4,7 @@ on: push
 
 jobs:
   project-testing:
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: checkout code
@@ -21,4 +21,4 @@ jobs:
 
       - name: run pipeline
         run: |
-            dvc repro
+          dvc repro
