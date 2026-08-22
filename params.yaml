@@ -22,6 +22,6 @@ model_trainer:
 model_evaluation:
   model_path: "artifacts/model/logistic_regression_model.pkl"
   input_test: "artifacts/data/vectorized/test_vectorized.csv"
-  metrics_path: "reports/metrics.yaml"
+  metrics_path: "reports/metrics.json"
   predictions_path: "reports/predictions.csv"
   experiment_info_path: "reports/experiment_info.json"

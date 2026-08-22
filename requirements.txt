@@ -6,6 +6,6 @@ pyyaml
 joblib
 dvc[s3]
 awscli
-mlflow
+mlflow==2.15.0
 dagshub
 xgboost

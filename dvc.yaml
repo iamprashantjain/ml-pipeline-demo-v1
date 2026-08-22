@@ -47,7 +47,7 @@ stages:
       - src/5_model_evaluation.py
       - params.yaml
     outs:
-      - reports/metrics.yaml
+      - reports/metrics.json
       - reports/experiment_info.json
 
 
