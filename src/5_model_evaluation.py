@@ -70,22 +70,32 @@ def evaluate_model(clf, X_test: np.ndarray, y_test: np.ndarray) -> dict:
         raise
 
 def save_metrics(metrics: dict, file_path: str) -> None:
-    """Save the evaluation metrics to a JSON file."""
     try:
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
         with open(file_path, 'w') as file:
             json.dump(metrics, file, indent=4)
+
         logging.debug('Metrics saved to %s', file_path)
+
     except Exception as e:
         logging.error('Error occurred while saving the metrics: %s', e)
         raise
 
 def save_model_info(run_id: str, model_path: str, file_path: str) -> None:
-    """Save the model run ID and path to a JSON file."""
     try:
-        model_info = {'run_id': run_id, 'model_path': model_path}
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+        model_info = {
+            'run_id': run_id,
+            'model_path': model_path
+        }
+
         with open(file_path, 'w') as file:
             json.dump(model_info, file, indent=4)
+
         logging.debug('Model info saved to %s', file_path)
+
     except Exception as e:
         logging.error('Error occurred while saving the model info: %s', e)
         raise

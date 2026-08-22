@@ -102,12 +102,12 @@ stages:
       size: 933
     - path: src/5_model_evaluation.py
       hash: md5
-      md5: 9788086c87dd0687ae4c5d21489d049e
-      size: 4933
+      md5: 6c6799ecc9b1789e7925b4de7fb1b950
+      size: 4999
     outs:
     - path: reports/experiment_info.json
       hash: md5
-      md5: 8ced7c3cf216087cb3985c55e92e71ab
+      md5: 1f251566f2927a691607e3a077a2854d
       size: 82
     - path: reports/metrics.json
       hash: md5
@@ -150,7 +150,7 @@ stages:
     deps:
     - path: reports/experiment_info.json
       hash: md5
-      md5: 8ced7c3cf216087cb3985c55e92e71ab
+      md5: 1f251566f2927a691607e3a077a2854d
       size: 82
     - path: src/6_register_model.py
       hash: md5
