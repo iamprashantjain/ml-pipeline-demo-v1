@@ -27,7 +27,7 @@ class TestModelLoading(unittest.TestCase):
         cls.new_model = mlflow.pyfunc.load_model(cls.new_model_uri)
 
         # Load the vectorizer
-        vectorizer_path = Path('ml-pipeline-demo/artifacts/data/vectorized/vectorizer.pkl')
+        vectorizer_path = Path('artifacts/data/vectorized/vectorizer.pkl')
         cls.vectorizer = pickle.load(open(vectorizer_path, 'rb'))
 
         # Load holdout test data
