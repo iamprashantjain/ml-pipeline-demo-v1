@@ -31,7 +31,7 @@ class TestModelLoading(unittest.TestCase):
         cls.vectorizer = pickle.load(open(vectorizer_path, 'rb'))
 
         # Load holdout test data
-        cls.holdout_data = pd.read_csv('data/processed/test_bow.csv')
+        cls.holdout_data = pd.read_csv('data/processed/test_processed.csv')
 
     @staticmethod
     def get_latest_model_version(model_name, stage="Staging"):
