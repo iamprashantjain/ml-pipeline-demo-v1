@@ -12,9 +12,16 @@ import nltk
 import string
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-from dotenv import load_dotenv;load_dotenv()
-from src.mylogging import logging
-from src.myexception import customexception
+import logging
+import os
+from datetime import datetime
+
+LOG_FILE=f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
+log_path=os.path.join(os.getcwd(),"logs")
+os.makedirs(log_path,exist_ok=True)
+LOG_FILEPATH=os.path.join(log_path,LOG_FILE)
+logging.basicConfig(level=logging.INFO, filename=LOG_FILEPATH,format="[%(asctime)s] %(lineno)d %(name)s - %(levelname)s - %(message)s")
+
 
 def lemmatization(text):
     """Lemmatize the text."""
@@ -96,10 +103,15 @@ def get_latest_model_version(model_name):
 model_name = "my_model"
 model_version = get_latest_model_version(model_name)
 
-model_uri = f'models:/{model_name}/{model_version}'
+if model_version is None:
+    raise RuntimeError(
+        f"No Production or Staging version found for MLflow model: {model_name}"
+    )
+
+model_uri = f"models:/{model_name}/{model_version}"
 model = mlflow.pyfunc.load_model(model_uri)
 
-vectorizer = joblib.load('artifacts/data/vectorized/vectorizer.pkl')
+vectorizer = joblib.load('models/vectorizer.pkl')
 
 @app.route('/')
 def home():

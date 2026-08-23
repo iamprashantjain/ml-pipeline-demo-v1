@@ -4,6 +4,8 @@ scikit-learn
 nltk
 pyyaml
 joblib
+dvc[s3]
 mlflow==2.15.0
 dagshub
 xgboost-cpu
+awscli
