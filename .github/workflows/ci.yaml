@@ -41,3 +41,10 @@ jobs:
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         
         run: python src/7_promote_model.py
+
+
+      - name: Run Flask app tests
+        if: success()
+        env:
+          DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+        run: python -m unittest tests/2_flask_app_test.py
