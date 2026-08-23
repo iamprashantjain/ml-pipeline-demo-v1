@@ -111,32 +111,36 @@ if model_version is None:
 model_uri = f"models:/{model_name}/{model_version}"
 model = mlflow.pyfunc.load_model(model_uri)
 
-vectorizer = joblib.load('models/vectorizer.pkl')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+vectorizer_path = os.path.join(
+    BASE_DIR,
+    "artifacts",
+    "data",
+    "vectorized",
+    "vectorizer.pkl"
+)
+
+vectorizer = joblib.load(vectorizer_path)
+
 
 @app.route('/')
 def home():
-    return render_template('index.html',result=None)
+    return render_template('index.html', result=None)
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
-
     text = request.form['text']
 
-    # clean
     text = normalize_text(text)
 
-    # bow
     features = vectorizer.transform([text])
 
-    # Convert sparse matrix to DataFrame
-    features_df = pd.DataFrame.sparse.from_spmatrix(features)
-    features_df = pd.DataFrame(features.toarray(), columns=[str(i) for i in range(features.shape[1])])
+    result = model.predict(features)
 
-    # prediction
-    result = model.predict(features_df)
-
-    # show
     return render_template('index.html', result=result[0])
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
