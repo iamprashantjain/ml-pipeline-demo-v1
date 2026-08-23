@@ -1,11 +1,11 @@
 data_ingestion:
   source_url: "https://raw.githubusercontent.com/campusx-official/jupyter-masterclass/main/tweet_emotions.csv"
-  test_size: 0.15
+  test_size: 0.30
   random_state: 42
   data_path: "artifacts/data"
 
 text_vectorization:
-  max_features: 25
+  max_features: 100
   input_train: artifacts/data/processed/train_processed.csv
   input_test: artifacts/data/processed/test_processed.csv
   output_path: artifacts/data/vectorized
@@ -13,7 +13,7 @@ text_vectorization:
 model_trainer:
   model_params:
     C: 0.01
-    max_iter: 25
+    max_iter: 100
     penalty: "l2"
     solver: "liblinear"
   input_train: artifacts/data/vectorized/train_vectorized.csv
