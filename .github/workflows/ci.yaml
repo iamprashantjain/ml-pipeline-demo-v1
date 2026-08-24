@@ -15,11 +15,9 @@ jobs:
         with:
           python-version: '3.10'
 
-
       - name: install dependencies
         run: |
           pip install -r requirements.txt
-
 
       - name: run pipeline
         env:
@@ -27,28 +25,23 @@ jobs:
         run: |
           dvc repro
 
-
       - name: Run model tests
         env:
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
           python -m unittest tests/1_model_test.py
 
-
       - name: Promote model to production
-        if: success() #meaning that all above steps executed properly
+        if: success()
         env:
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
-        
         run: python src/7_promote_model.py
-
 
       - name: Run Flask app tests
         if: success()
         env:
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: python -m unittest tests/2_flask_app_test.py
-
 
       - name: Login to AWS ECR
         if: success()
@@ -57,40 +50,34 @@ jobs:
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 739275446561.dkr.ecr.ap-south-1.amazonaws.com
 
-      
       - name: Build Docker image
         if: success()
         run: |
           docker build --no-cache -t prashant-ecr .
-
 
       - name: Tag Docker image
         if: success()
         run: |
           docker tag prashant-ecr:latest 739275446561.dkr.ecr.ap-south-1.amazonaws.com/prashant-ecr:latest
 
-
       - name: Push Docker image to AWS ECR
         if: success()
         run: |
           docker push 739275446561.dkr.ecr.ap-south-1.amazonaws.com/prashant-ecr:latest
 
-
-      
       - name: Deploy to EC2
         if: success()
-        uses:
-          appleboy/ssh-action@v0.1.5
-          with:
-            host: ${{ secrets. EC2_HOST }}
-            username: ${{ secrets. EC2_USER }}
-            key: ${{ secrets. EC2_SSH_KEY }}
-            script:
-              aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-              aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-              aws configure set default.region ap-southeast-2
-              aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 739275446561.dkr.ecr.ap-south-1.amazonaws.com
-              docker pull 739275446561.dkr.ecr.ap-south-1.amazonaws.com/prashant-ecr:latest
-              docker stop my-flask-app || true
-              docker rm my-flask-app || true
-              docker run -d -p 80:5000 -e DAGSHUB_TOKEN=7bed6b5be2021b1a4eaae221787bcb048ab2bcfd --name my-flask-app 739275446561.dkr.ecr.ap-south-1.amazonaws.com/prashant-ecr:latest
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws configure set default.region ap-south-1
+            aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 739275446561.dkr.ecr.ap-south-1.amazonaws.com
+            docker pull 739275446561.dkr.ecr.ap-south-1.amazonaws.com/prashant-ecr:latest
+            docker stop my-flask-app || true
+            docker rm my-flask-app || true
+            docker run -d -p 80:5000 -e DAGSHUB_TOKEN=${{ secrets.DAGSHUB_TOKEN }} --name my-flask-app 739275446561.dkr.ecr.ap-south-1.amazonaws.com/prashant-ecr:latest
