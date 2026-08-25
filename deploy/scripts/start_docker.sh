@@ -18,4 +18,8 @@ if [ "$(docker ps -aq -f name=my-flask-app)" ]; then
 fi
 
 # Run a new container
-docker run -d -p 80:5000 --name my-flask-app 739275446561.dkr.ecr.ap-south-1.amazonaws.com/prashant-ecr:latest
+docker run -d -p 80:5000 \
+  --name my-flask-app \
+  --restart always \
+  -e DAGSHUB_TOKEN="$DAGSHUB_TOKEN" \
+  739275446561.dkr.ecr.ap-south-1.amazonaws.com/prashant-ecr:latest
