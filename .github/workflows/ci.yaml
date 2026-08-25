@@ -108,4 +108,4 @@ jobs:
             --deployment-group-name my-deployment-group \
             --s3-location bucket=my-mlops-project-demo,key=ml-pipeline-demo/deployment.zip,bundleType=zip
             --file-exists-behavior OVERWRITE \
-            --region ap-southeast-2
+            --region ap-south-1
