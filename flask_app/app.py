@@ -1,5 +1,5 @@
 import joblib
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request, jsonify
 import mlflow
 import pickle
 import os
@@ -127,6 +127,11 @@ vectorizer = joblib.load(vectorizer_path)
 @app.route('/')
 def home():
     return render_template('index.html', result=None)
+
+
+@app.route('/health')
+def health():
+    return jsonify({'status':'healthy'}), 200
 
 
 @app.route('/predict', methods=['POST'])
