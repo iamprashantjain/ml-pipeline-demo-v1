@@ -102,10 +102,11 @@ jobs:
         run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region ap-south-1
           aws deploy create-deployment \
             --application-name my-flask-application \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --deployment-group-name my-deployment-group \
-            --s3-location bucket=my-mlops-project-demo,key=ml-pipeline-demo/deployment.zip,bundleType=zip
+            --s3-location bucket=my-mlops-project-demo,key=ml-pipeline-demo/deployment.zip,bundleType=zip \
             --file-exists-behavior OVERWRITE \
             --region ap-south-1
