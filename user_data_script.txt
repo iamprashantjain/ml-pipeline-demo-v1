@@ -6,6 +6,10 @@ sudo apt-get update -y
 # Install dependencies (Ruby, wget, gdebi-core)
 sudo apt-get install ruby-full wget gdebi-core -y
 
+# Store DAGSHUB_TOKEN in environment
+echo "export DAGSHUB_TOKEN=YOUR_ACTUAL_DAGSHUB_TOKEN_HERE" >> /etc/environment
+source /etc/environment
+
 # Navigate to home directory and cleanup old installers
 cd /home/ubuntu
 rm -f install install.*
